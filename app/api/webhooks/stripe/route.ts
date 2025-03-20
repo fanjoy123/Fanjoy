@@ -37,7 +37,7 @@ async function handleWebhook(event: Stripe.Event) {
       // Record the order in Firestore
       await setDoc(doc(db, 'orders', session.id), {
         id: session.id,
-        sessionId: session.id,
+        orderId: session.id,
         customerEmail,
         productId,
         creatorId,

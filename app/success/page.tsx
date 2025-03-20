@@ -11,15 +11,15 @@ export default function SuccessPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const sessionId = searchParams.get('session_id');
-    if (!sessionId) {
-      setError('No session ID found');
+    const orderId = searchParams.get('session_id');
+    if (!orderId) {
+      setError('No order ID found');
       setLoading(false);
       return;
     }
 
     // Fetch order details from your backend
-    fetch(`/api/orders/${sessionId}`, {
+    fetch(`/api/orders/${orderId}`, {
       headers: {
         'Content-Type': 'application/json',
       },

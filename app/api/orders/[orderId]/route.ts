@@ -13,11 +13,11 @@ export async function GET(
     // First try to get order by ID
     let orderDoc = await getDoc(doc(db, 'orders', orderId));
     
-    // If not found, try to get by session ID
+    // If not found, try to get by order ID
     if (!orderDoc.exists()) {
       const ordersQuery = query(
         collection(db, 'orders'),
-        where('sessionId', '==', orderId)
+        where('orderId', '==', orderId)
       );
       const querySnapshot = await getDocs(ordersQuery);
       if (!querySnapshot.empty) {
