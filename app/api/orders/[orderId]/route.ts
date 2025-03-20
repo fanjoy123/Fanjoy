@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { doc, getDoc, updateDoc, query, collection, where, getDocs } from 'firebase/firestore';
-import { sendOrderStatusEmail, sendCreatorOrderNotification } from '@/lib/email';
+import { mockData } from '@/lib/mockData';
 
 export async function GET(
   request: Request,
@@ -9,35 +7,16 @@ export async function GET(
 ) {
   try {
     const orderId = params.orderId;
+    const order = await mockData.getOrder(orderId);
     
-    // First try to get order by ID
-    let orderDoc = await getDoc(doc(db, 'orders', orderId));
-    
-    // If not found, try to get by order ID
-    if (!orderDoc.exists()) {
-      const ordersQuery = query(
-        collection(db, 'orders'),
-        where('orderId', '==', orderId)
-      );
-      const querySnapshot = await getDocs(ordersQuery);
-      if (!querySnapshot.empty) {
-        orderDoc = querySnapshot.docs[0];
-      }
-    }
-    
-    if (!orderDoc.exists()) {
+    if (!order) {
       return NextResponse.json(
         { error: 'Order not found' },
         { status: 404 }
       );
     }
 
-    const orderData = orderDoc.data();
-
-    return NextResponse.json({
-      id: orderDoc.id,
-      ...orderData,
-    });
+    return NextResponse.json(order);
   } catch (error) {
     console.error('Error fetching order details:', error);
     return NextResponse.json(
@@ -56,53 +35,24 @@ export async function PATCH(
     const body = await request.json();
     const { status, trackingNumber, notes } = body;
 
-    // Get current order data
-    const orderDoc = await getDoc(doc(db, 'orders', orderId));
-    if (!orderDoc.exists()) {
+    const order = await mockData.getOrder(orderId);
+    if (!order) {
       return NextResponse.json(
         { error: 'Order not found' },
         { status: 404 }
       );
     }
 
-    const orderData = orderDoc.data();
-    const previousStatus = orderData.status;
-
-    // Update order in Firestore
-    const orderRef = doc(db, 'orders', orderId);
-    const updateData: any = {
-      updatedAt: new Date().toISOString(),
-    };
+    const previousStatus = order.status;
+    const updateData: any = {};
 
     if (status) updateData.status = status;
     if (trackingNumber) updateData.trackingNumber = trackingNumber;
     if (notes) updateData.notes = notes;
 
-    await updateDoc(orderRef, updateData);
+    const updatedOrder = await mockData.updateOrder(orderId, updateData);
 
-    // Send email notifications if status has changed
-    if (status && status !== previousStatus) {
-      // Send to customer
-      await sendOrderStatusEmail(
-        orderData.customerEmail,
-        orderId,
-        status,
-        orderData.amount,
-        trackingNumber
-      );
-
-      // Send to creator if it's a new order
-      if (status === 'pending' && previousStatus === 'processing') {
-        await sendCreatorOrderNotification(
-          orderData.creatorEmail,
-          orderId,
-          orderData.amount,
-          orderData.customerEmail
-        );
-      }
-    }
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, order: updatedOrder });
   } catch (error) {
     console.error('Error updating order:', error);
     return NextResponse.json(

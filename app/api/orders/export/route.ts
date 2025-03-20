@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { headers } from 'next/headers';
+import { mockData } from '@/lib/mockData';
 
 function generateCSV(orders: any[]) {
   const headers = [
@@ -34,28 +32,8 @@ function generateCSV(orders: any[]) {
 
 export async function GET(request: Request) {
   try {
-    const headersList = await headers();
-    const creatorId = headersList.get('x-creator-id');
-
-    if (!creatorId) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    // Get all orders for the creator
-    const ordersQuery = query(
-      collection(db, 'orders'),
-      where('creatorId', '==', creatorId),
-      orderBy('createdAt', 'desc')
-    );
-
-    const ordersSnapshot = await getDocs(ordersQuery);
-    const orders = ordersSnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    // Get all orders
+    const orders = await mockData.getOrders();
 
     // Generate CSV content
     const csvContent = generateCSV(orders);
