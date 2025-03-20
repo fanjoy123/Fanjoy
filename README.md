@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fanjoy - Creator Merch Platform
 
-## Getting Started
+A platform for creators to sell merchandise directly to their fans.
 
-First, run the development server:
+## Features
+
+- Product management
+- Order processing
+- Secure payments with Stripe
+- Email notifications
+- Order export functionality
+- Creator dashboard
+
+## Deployment
+
+### Prerequisites
+
+- Node.js 18.x or later
+- npm 9.x or later
+- Vercel account
+- Firebase project
+- Stripe account
+- Resend account (for email)
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in the required environment variables:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Required environment variables:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Firebase configuration
+- Stripe API keys and webhook secret
+- SMTP settings or Resend API key
+- Next.js public URLs
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Deploy to Vercel
 
-## Learn More
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
+2. Connect your repository to Vercel
+3. Configure environment variables in Vercel project settings
+4. Deploy!
 
-To learn more about Next.js, take a look at the following resources:
+### Stripe Webhook Setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Go to your Stripe Dashboard > Developers > Webhooks
+2. Add a new webhook endpoint: `https://your-domain.com/api/webhooks/stripe`
+3. Select events to listen for:
+   - `checkout.session.completed`
+   - `payment_intent.succeeded`
+   - `payment_intent.payment_failed`
+   - `payout.paid`
+4. Copy the webhook signing secret and add it to your environment variables as `STRIPE_WEBHOOK_SECRET`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Firebase Setup
 
-## Deploy on Vercel
+1. Create a new Firebase project
+2. Enable Authentication and Firestore
+3. Set up Firestore security rules
+4. Copy Firebase configuration to environment variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Email Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Option 1 - SMTP:
+1. Configure your SMTP server settings
+2. Add SMTP credentials to environment variables
+
+Option 2 - Resend:
+1. Create a Resend account
+2. Add your Resend API key to environment variables
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## Security
+
+- All API routes are protected with authentication
+- Stripe webhooks are validated with signatures
+- Firebase security rules are enforced
+- Environment variables are properly configured
+- HTTPS is enforced in production
+
+## Support
+
+For support, email support@fanjoy.com or visit our [contact page](https://fanjoy.vercel.app/contact).

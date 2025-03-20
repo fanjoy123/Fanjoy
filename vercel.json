@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["sfo1"],
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "https://fanjoy.vercel.app",
+    "NEXT_PUBLIC_BASE_URL": "https://fanjoy.vercel.app"
+  }
+} 
