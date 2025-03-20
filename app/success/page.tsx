@@ -11,7 +11,7 @@ export default function SuccessPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const orderId = searchParams.get('session_id');
+    const orderId = searchParams.get('order_id');
     if (!orderId) {
       setError('No order ID found');
       setLoading(false);
