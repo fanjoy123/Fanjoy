@@ -1,30 +1,91 @@
-import Link from 'next/link';
+'use client';
 
-export default function HomePage() {
+const FEATURED_CREATORS = [
+  {
+    name: "David Dobrik",
+    followers: "18.4M",
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/files/dobrik_1200x1200.jpg?v=1614323980"
+  },
+  {
+    name: "Addison Rae",
+    followers: "88.7M",
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/files/addison_1200x1200.jpg?v=1614324016"
+  },
+  {
+    name: "Charli D'Amelio",
+    followers: "141.1M",
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/files/charli_1200x1200.jpg?v=1614324050"
+  }
+];
+
+const TRENDING_PRODUCTS = [
+  {
+    name: "Classic Hoodie",
+    creator: "David Dobrik",
+    price: 49.99,
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/products/dobrik-hoodie-black_1024x1024.jpg?v=1614325000"
+  },
+  {
+    name: "Signature Tee",
+    creator: "Addison Rae",
+    price: 24.99,
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/products/addison-tee-white_1024x1024.jpg?v=1614325100"
+  },
+  {
+    name: "Phone Case",
+    creator: "Charli D'Amelio",
+    price: 19.99,
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/products/charli-phone-case_1024x1024.jpg?v=1614325200"
+  },
+  {
+    name: "Sticker Pack",
+    creator: "David Dobrik",
+    price: 12.99,
+    image: "https://cdn.shopify.com/s/files/1/0037/6679/7521/products/dobrik-stickers_1024x1024.jpg?v=1614325300"
+  }
+];
+
+export default function Home() {
   return (
-    <div className="bg-white">
-      {/* Hero section */}
-      <div className="relative isolate overflow-hidden bg-gradient-to-b from-blue-100/20">
-        <div className="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-40">
-          <div className="px-6 lg:px-0 lg:pt-4">
-            <div className="mx-auto max-w-2xl">
-              <div className="max-w-lg">
-                <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                  Sell your merch directly to your fans
-                </h1>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Fanjoy makes it easy for creators to design, sell, and fulfill merchandise. Connect with your audience and grow your brand.
-                </p>
-                <div className="mt-10 flex items-center gap-x-6">
-                  <Link
-                    href="/auth/signup"
-                    className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                  >
-                    Get started
-                  </Link>
-                  <Link href="/products" className="text-sm font-semibold leading-6 text-gray-900">
-                    Browse products <span aria-hidden="true">→</span>
-                  </Link>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <div className="relative bg-gray-50 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="w-full h-full object-cover bg-gradient-to-r from-blue-600 to-blue-700" />
+          <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto">
+          <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:pb-28 xl:pb-32">
+            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+              {/* Navigation */}
+              <nav className="relative flex items-center justify-between sm:h-10">
+                <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+                  <div className="flex items-center justify-between w-full md:w-auto">
+                    <a href="#" className="text-3xl font-bold text-white">
+                      Fanjoy
+                    </a>
+                  </div>
+                </div>
+                <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+                  <a href="#" className="font-medium text-white hover:text-gray-200">Explore</a>
+                  <a href="#" className="font-medium text-white hover:text-gray-200">Start Selling</a>
+                  <a href="#" className="font-medium text-white hover:text-gray-200">Sign in</a>
+                </div>
+              </nav>
+            </div>
+
+            {/* Search Bar */}
+            <div className="mt-10 mx-auto max-w-3xl px-4 sm:px-6">
+              <div className="relative">
+                <input
+                  type="text"
+                  className="w-full h-14 px-6 rounded-full border-2 border-white bg-white/10 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-transparent"
+                  placeholder="Search for creator merch..."
+                />
+                <div className="absolute inset-y-0 right-0 pr-5 flex items-center">
+                  <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
                 </div>
               </div>
             </div>
@@ -32,82 +93,83 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Feature section */}
-      <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-56 lg:px-8">
-        <div className="mx-auto max-w-2xl lg:text-center">
-          <h2 className="text-base font-semibold leading-7 text-blue-600">Everything you need</h2>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            A complete merch solution
-          </p>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            From design to fulfillment, Fanjoy handles everything so you can focus on creating amazing content.
-          </p>
-        </div>
-        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-            <div className="flex flex-col">
-              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                <svg className="h-5 w-5 flex-none text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                </svg>
-                Easy Order Management
-              </dt>
-              <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                <p className="flex-auto">Track orders, manage inventory, and handle fulfillment all in one place.</p>
-              </dd>
-            </div>
-            <div className="flex flex-col">
-              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                <svg className="h-5 w-5 flex-none text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" />
-                  <path fillRule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clipRule="evenodd" />
-                </svg>
-                Secure Payments
-              </dt>
-              <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                <p className="flex-auto">Process payments securely with Stripe integration and automatic payouts.</p>
-              </dd>
-            </div>
-            <div className="flex flex-col">
-              <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                <svg className="h-5 w-5 flex-none text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.788.788 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM16.44 15.98a4.97 4.97 0 002.07-.654.788.788 0 00.357-.442 3 3 0 00-4.308-3.517 6.484 6.484 0 011.907 3.96 2.32 2.32 0 01-.026.654zM18 8a2 2 0 11-4 0 2 2 0 014 0zM5.304 16.19a.844.844 0 01-.277-.71 5 5 0 019.947 0 .843.843 0 01-.277.71A6.975 6.975 0 0110 18a6.974 6.974 0 01-4.696-1.81z" />
-                </svg>
-                Fan Engagement
-              </dt>
-              <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                <p className="flex-auto">Connect with your fans and build a community around your brand.</p>
-              </dd>
-            </div>
-          </dl>
+      {/* Categories */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex space-x-4 overflow-x-auto pb-4">
+          {['T-Shirts', 'Hoodies', 'Stickers', 'Accessories', 'Phone Cases', 'Posters'].map((category) => (
+            <a
+              key={category}
+              href="#"
+              className="px-6 py-3 rounded-full bg-gray-100 text-gray-800 hover:bg-gray-200 whitespace-nowrap font-medium transition-colors"
+            >
+              {category}
+            </a>
+          ))}
         </div>
       </div>
 
-      {/* CTA section */}
-      <div className="relative isolate mt-32 px-6 py-32 sm:mt-56 sm:py-40 lg:px-8">
-        <div className="absolute inset-x-0 top-1/2 -z-10 -translate-y-1/2 transform-gpu overflow-hidden opacity-30 blur-3xl">
-          <div className="ml-[max(50%,38rem)] aspect-[1313/771] w-[82.125rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc]" />
+      {/* Featured Creators */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Creators</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {FEATURED_CREATORS.map((creator) => (
+            <div key={creator.name} className="relative rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all group">
+              <div className="relative w-full h-64">
+                <div
+                  className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-200"
+                  style={{ backgroundImage: `url(${creator.image})` }}
+                />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                <h3 className="text-white font-semibold text-xl">{creator.name}</h3>
+                <p className="text-gray-200 text-sm">{creator.followers} Followers</p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Ready to start selling?
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-gray-600">
-            Join thousands of creators who are already selling their merch on Fanjoy.
+      </section>
+
+      {/* Trending Products */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Trending Products</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {TRENDING_PRODUCTS.map((product) => (
+            <div key={product.name} className="group">
+              <div className="relative rounded-lg overflow-hidden bg-gray-100 aspect-w-1 aspect-h-1">
+                <div className="relative w-full h-full">
+                  <div
+                    className="w-full h-full bg-cover bg-center group-hover:opacity-75 transition-opacity"
+                    style={{ backgroundImage: `url(${product.image})` }}
+                  />
+                </div>
+                <div className="absolute bottom-2 right-2">
+                  <button className="bg-white text-gray-900 px-4 py-2 rounded-full text-sm font-medium shadow-sm hover:bg-gray-50 transition-colors">
+                    Shop Now
+                  </button>
+                </div>
+              </div>
+              <div className="mt-4">
+                <h3 className="text-sm font-medium text-gray-900">{product.name}</h3>
+                <p className="mt-1 text-sm text-gray-500">{product.creator}</p>
+                <p className="mt-1 text-sm font-medium text-gray-900">${product.price}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Start Selling CTA */}
+      <section className="bg-gradient-to-r from-blue-600 to-blue-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Start Your Creator Store</h2>
+          <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
+            Join thousands of creators selling custom merchandise. No upfront costs, just pure creativity.
           </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link
-              href="/auth/signup"
-              className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Get started
-            </Link>
-            <Link href="/contact" className="text-sm font-semibold leading-6 text-gray-900">
-              Contact sales <span aria-hidden="true">→</span>
-            </Link>
-          </div>
+          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-medium hover:bg-blue-50 transition-colors">
+            Open Your Store
+          </button>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
